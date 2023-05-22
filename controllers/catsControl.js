@@ -68,3 +68,44 @@ exports.addCat = (req, res, next)=>{
     });
 }
 
+exports.updateCard = (req,res,next)=>{
+    const {catId} = req.params;
+    let path;
+    //check if anew image picked
+    if(req.file){
+        path = req.file.path;
+    }else{
+        path = req.body.imageUrl;
+    }
+
+    Cat.findById(catId).then(cat =>{
+        if(!cat){
+            return res.status(404).json({message:"cat not found"});
+        }
+        //delete old image
+        if(path !== cat.imageUrl){
+            fs.unlink(cat.imageUrl,err=>{
+                if(err){
+                    console.log(err);
+                }else{
+                    console.log("old image deleted");
+                }
+            });
+        }
+        cat.catName = req.body.catName;
+        cat.imageUrl = path;
+        cat.gender = req.body.gender;
+        cat.age = req.body.age;
+        cat.ownerName = req.body.ownerName;
+        cat.ownerPhone = req.body.ownerPhone;
+        return cat.save();
+
+    }).then(result =>{
+        res.status(200).json({message:"cat updated successfully",cat:result});
+
+    }).catch(err =>{
+        console.log(err);
+        res.status(400).json({message:"error in updating cat",err:err});
+    });
+
+}

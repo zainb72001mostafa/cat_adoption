@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose=require("mongoose");
+const cors = require("cors");
 const bodyParser = require('body-parser');
 const catRoutes = require('./routes/cats');
 
@@ -10,6 +11,7 @@ app.use(bodyParser.json());
 
 //routes
 app.use(catRoutes);
+app.use(cors());
 
 //serv images folder
 app.use(express.static('uploads'));
