@@ -16,9 +16,9 @@ router.get('/cat/:catId',catsControl.getCat);
 router.post('/cat/add',upload.single('image'),catsControl.addCat);
 
 //PUT update cat details
-router.put('/cat/:catId/edit',upload.single('image'),catsControl.updateCat);
+//router.put('/cat/:catId/edit',upload.single('image'),catsControl.updateCat);
 
 //delete cat details
-router.delete('/cat/:catId/delete',catsControl.deleteCat);
+//router.delete('/cat/:catId/delete',catsControl.deleteCat);
 
 module.exports = router;

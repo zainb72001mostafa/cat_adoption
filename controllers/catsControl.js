@@ -68,7 +68,7 @@ exports.addCat = (req, res, next)=>{
     });
 }
 
-exports.updateCard = (req,res,next)=>{
+/*exports.updateCard = (req,res,next)=>{
     const {catId} = req.params;
     let path;
     //check if anew image picked
@@ -108,4 +108,4 @@ exports.updateCard = (req,res,next)=>{
         res.status(400).json({message:"error in updating cat",err:err});
     });
 
-}
+}*/
