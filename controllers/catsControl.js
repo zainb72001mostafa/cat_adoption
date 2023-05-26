@@ -24,6 +24,7 @@ exports.fileFilter = function (req, file, cb) {
 
 exports.getAllCats = (req, res, next) =>{
     Cat.find().then(cats =>{
+
         res.status(200).json({message:"all cat fetched",cats: cats});
     }).catch(err =>{
         res.status(404).json({message : "no cats found",err: err })
@@ -31,7 +32,7 @@ exports.getAllCats = (req, res, next) =>{
 }
 
 //get one cat
-exports.getCat = (req,res,next)=>{
+exports.getCat = (req,res,next)=>{//
     const catId = req.params.catId;
     Cat.findById(catId).then(cat =>{
         if(!cat){
@@ -67,8 +68,8 @@ exports.addCat = (req, res, next)=>{
         res.status(400).json({message:"error in adding cat",err:err});
     });
 }
-
-/*exports.updateCard = (req,res,next)=>{
+//update on cat post
+exports.updateCat = (req,res,next)=>{
     const {catId} = req.params;
     let path;
     //check if anew image picked
@@ -108,4 +109,21 @@ exports.addCat = (req, res, next)=>{
         res.status(400).json({message:"error in updating cat",err:err});
     });
 
-}*/
+}
+//Delete cat post
+
+exports.deleteCat = (req, res, next)=>{
+    const {catId} = req.params;
+    Cat.findById(catId).then(cat =>{
+        if(!cat){
+            return res.status(404).json({message:"cat not found"});
+        }
+        fs.unlink(cat.imageUrl, err => console.log(err));
+        return Cat.findByIdAndRemove(catId);
+    }
+    ).then(result=>{
+        res.status(200).json({message: "cat deleted successfully" , cat: result});
+    }).catch(err =>{
+        res.status(400).json({message: "error in delete cat", err: err})
+    });
+}
