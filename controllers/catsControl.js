@@ -122,7 +122,7 @@ exports.deleteCat = (req, res, next)=>{
         return Cat.findByIdAndRemove(catId);
     }
     ).then(result=>{
-        res.status(200).json({message: "cat deleted successfully" , cat: result});
+        res.status(200).json({message: "cat deleted successfully"});
     }).catch(err =>{
         res.status(400).json({message: "error in delete cat", err: err})
     });
