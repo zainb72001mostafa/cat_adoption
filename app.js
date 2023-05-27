@@ -3,6 +3,7 @@ const mongoose=require("mongoose");
 const cors = require("cors");
 const bodyParser = require('body-parser');
 const catRoutes = require('./routes/cats');
+require('dotenv').config();
 
 const app = express();
 
@@ -17,7 +18,8 @@ app.use(cors());
 app.use(express.static('uploads'));
 
 //connect to mongodb
-mongoose.connect('mongodb+srv://zainb_23:cat_adoption_app@cluster0.r57l7.mongodb.net/').then(result =>{
+var DB_URL=process.env.DB_URL;
+mongoose.connect(DB_URL).then(result =>{
     app.listen(3307);
     console.log("connected to database succesfully !!");
 }).catch(err => console.log(err));
